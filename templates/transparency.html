@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparansi Model - Prediksi Penjualan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="tabs">
+            <a href="{{ url_for('index') }}" class="{{ 'active' if page == 'home' else '' }}">Prediksi</a>
+            <a href="{{ url_for('transparency') }}" class="{{ 'active' if page == 'transparency' else '' }}">Transparansi Model</a>
+        </nav>
+
+        <h1>Transparansi Model</h1>
+        <p>Halaman ini menunjukkan parameter dan performa model Regresi Linear yang digunakan untuk prediksi.</p>
+        
+        <div class="results-grid">
+            <div class="result-card">
+                <h3>R-squared (R²)</h3>
+                <p class="metric">{{ '%.4f'|format(results.r2_score) }}</p>
+                <small>Hanya {{ '%.2f'|format(results.r2_score * 100) }}% variasi penjualan yang bisa dijelaskan oleh rating.</small>
+            </div>
+            <div class="result-card">
+                <h3>RMSE</h3>
+                <p class="metric">{{ '%.2f'|format(results.rmse) }}</p>
+                <small>Rata-rata, prediksi model meleset sekitar {{ results.rmse|round|int }} unit.</small>
+            </div>
+        </div>
+
+        <div class="model-details">
+            <h3>Detail Persamaan Model</h3>
+            <p>Model ini menggunakan persamaan garis lurus:</p>
+            <div class="formula">
+                <code>Penjualan = ({{ '%.2f'|format(results.coefficient) }} * Rating) + {{ '%.2f'|format(results.intercept) }}</code>
+            </div>
+            <ul>
+                <li><strong>Koefisien (Slope):</strong> {{ '%.2f'|format(results.coefficient) }}</li>
+                <li><strong>Intercept:</strong> {{ '%.2f'|format(results.intercept) }}</li>
+            </ul>
+        </div>
+        <div class="data-info">
+            <h3>Informasi Data</h3>
+            <p>Model dilatih menggunakan <strong>{{ results.data_shape[0] }}</strong> baris data yang bersih.</p>
+        </div>
+
+    </div>
+</body>
+</html>

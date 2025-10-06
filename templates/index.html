@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Penjualan Produk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="tabs">
+            <a href="{{ url_for('index') }}" class="{{ 'active' if page == 'home' else '' }}">Prediksi</a>
+            <a href="{{ url_for('transparency') }}" class="{{ 'active' if page == 'transparency' else '' }}">Transparansi Model</a>
+        </nav>
+
+        <h1>Prediksi Penjualan Produk 📈</h1>
+        <p>Masukkan rating produk (1.0 - 5.0) untuk memprediksi estimasi jumlah unit yang akan terjual.</p>
+        
+        <form action="/" method="post">
+            <label for="rating">Rating Produk:</label>
+            <input type="number" id="rating" name="rating" step="0.1" min="1" max="5" required placeholder="Contoh: 4.8">
+            
+            <button type="submit">Prediksi</button>
+        </form>
+        
+        {% if prediction_text %}
+        <div class="result">
+            <h2>{{ prediction_text }}</h2>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
